@@ -37,7 +37,7 @@ def get_arguments() -> Namespace:
 
 
 def load_databases(file_name: str, new: bool=False) -> PyKeePass:
-    """Create or return the existing database."""
+    """Create or open a database."""
     try_again = 0
     while try_again < 3:
         password = getpass("Database password: ")
