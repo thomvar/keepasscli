@@ -39,16 +39,15 @@ def get_arguments() -> Namespace:
 def load_databases(file_name: str, new: bool=False) -> PyKeePass:
     """Create or return the existing database. `try_again` opens up for brute-force attacks,
     will use the 3-second rule between retries."""
-    try_again = True
-    while try_again:
+    try_again = 0
+    while try_again < 3:
         password = getpass("Database password: ")
         if new:
             return create_database(file_name, password=password)
         try:
             return PyKeePass(file_name, password=password)
         except CredentialsError:
-            try_again = input("Wrong password, try again? [yN] ").lower() == "y"
-            sleep(3)
+            try_again += 1
 
 
 def make_selection(options, quit: bool=True, back: bool=False):
